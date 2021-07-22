@@ -20,27 +20,31 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Create a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites">
+<meta name="description" content="Taint Analysis挖坑，待学习，以后补充 0X00 基本原理 &lt;sources, sinks, sanitizers&gt; 分析程序中由污点源引入的数据是否能够不经过无害处理，而直接传播到污点汇聚点。如果不能，说明信息流失安全的；否则，说明系统产生了隐私数据泄露或危险数据操作等问题  sources：污点源，代表直接引入不受信任的数据或者机密数据到系统中 sink：污点汇聚点，代">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo 命令">
-<meta property="og:url" content="http://example.com/2021/07/19/hello-world/index.html">
+<meta property="og:title" content="Taint Analysis">
+<meta property="og:url" content="http://example.com/2021/07/21/taint/index.html">
 <meta property="og:site_name" content="Ya&#39;Blog">
-<meta property="og:description" content="Create a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites">
+<meta property="og:description" content="Taint Analysis挖坑，待学习，以后补充 0X00 基本原理 &lt;sources, sinks, sanitizers&gt; 分析程序中由污点源引入的数据是否能够不经过无害处理，而直接传播到污点汇聚点。如果不能，说明信息流失安全的；否则，说明系统产生了隐私数据泄露或危险数据操作等问题  sources：污点源，代表直接引入不受信任的数据或者机密数据到系统中 sink：污点汇聚点，代">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-07-19T13:19:25.226Z">
-<meta property="article:modified_time" content="2021-07-21T11:09:30.249Z">
+<meta property="og:image" content="https://image-1111.oss-cn-beijing.aliyuncs.com/img/%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF1-20210720162357293-20210721191022545.png">
+<meta property="article:published_time" content="2021-07-21T11:10:04.000Z">
+<meta property="article:modified_time" content="2021-07-21T11:10:46.994Z">
 <meta property="article:author" content="Ya">
+<meta property="article:tag" content="Learning">
+<meta property="article:tag" content="security">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-1111.oss-cn-beijing.aliyuncs.com/img/%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF1-20210720162357293-20210721191022545.png">
 
 
-<link rel="canonical" href="http://example.com/2021/07/19/hello-world/">
+<link rel="canonical" href="http://example.com/2021/07/21/taint/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/07/19/hello-world/","path":"2021/07/19/hello-world/","title":"hexo 命令"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2021/07/21/taint/","path":"2021/07/21/taint/","title":"Taint Analysis"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>hexo 命令 | Ya'Blog</title>
+<title>Taint Analysis | Ya'Blog</title>
   
 
 
@@ -116,7 +120,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Taint-Analysis"><span class="nav-number">1.</span> <span class="nav-text">Taint Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0X00-%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">1.0.1.</span> <span class="nav-text">0X00 基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0X01-Taint-Checking"><span class="nav-number">1.0.2.</span> <span class="nav-text">0X01 Taint Checking</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0X02-Taint-Tracking"><span class="nav-number">1.0.3.</span> <span class="nav-text">0X02 Taint Tracking</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">1.0.4.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -176,7 +180,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/19/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/21/taint/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -189,7 +193,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          hexo 命令
+          Taint Analysis
         </h1>
 
         <div class="post-meta-container">
@@ -199,16 +203,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-07-19 21:19:25" itemprop="dateCreated datePublished" datetime="2021-07-19T21:19:25+08:00">2021-07-19</time>
+      <time title="Created: 2021-07-21 19:10:04 / Modified: 19:10:46" itemprop="dateCreated datePublished" datetime="2021-07-21T19:10:04+08:00">2021-07-21</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-21 19:09:30" itemprop="dateModified" datetime="2021-07-21T19:09:30+08:00">2021-07-21</time>
-      </span>
 
   
 </div>
@@ -220,18 +218,37 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <h2 id="Taint-Analysis"><a href="#Taint-Analysis" class="headerlink" title="Taint Analysis"></a>Taint Analysis</h2><p>挖坑，待学习，以后补充</p>
+<h4 id="0X00-基本原理"><a href="#0X00-基本原理" class="headerlink" title="0X00 基本原理"></a>0X00 基本原理</h4><hr>
+<p>&lt;sources, sinks, sanitizers&gt;</p>
+<p>分析程序中由<strong>污点源</strong>引入的数据是否能够不经过无害处理，而直接传播到污点汇聚点。如果不能，说明信息流失安全的；否则，说明系统产生了隐私数据泄露或危险数据操作等问题</p>
+<ul>
+<li>sources：污点源，代表直接引入不受信任的数据或者机密数据到系统中</li>
+<li>sink：污点汇聚点，代表直接产生安全敏感操作或者泄露隐私数据到外界</li>
+<li>sanitizer：无害处理，代表通过数据加密或者移除危害操作等手段使数据传播不再对软件系统的信息安全产生危害</li>
+</ul>
+<p><img src="https://image-1111.oss-cn-beijing.aliyuncs.com/img/%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF1-20210720162357293-20210721191022545.png"></p>
+<h4 id="0X01-Taint-Checking"><a href="#0X01-Taint-Checking" class="headerlink" title="0X01 Taint Checking"></a>0X01 Taint Checking</h4><hr>
+<p>在不运行代码且不修改代码的前提下，通过分析程序变量间的数据依赖来检测数据能否从污点源传播到污点汇聚点。</p>
+<p>常见的污点传播方式包括：直接赋值传播、通过函数调用传播以及通过别名(指针)传播</p>
+<p>分析对象一般是源码或者中间表示。</p>
+<p>静态分析过程：</p>
+<ul>
+<li><p>根据函数调用关系构建调用图(call graph)；</p>
+</li>
+<li><p>在函数内部或者函数间根据不同的程序特性进行具体的数据流传播分析</p>
+</li>
+</ul>
+<h4 id="0X02-Taint-Tracking"><a href="#0X02-Taint-Tracking" class="headerlink" title="0X02 Taint Tracking"></a>0X02 Taint Tracking</h4><hr>
+<p>通过实时监控程序的污点数据在系统程序中的传播来检测数据能否从污点源传播到污点汇聚点。</p>
+<p>动态分析过程：</p>
+<ul>
+<li>要为污点数据扩展一个污点标记(tainted tag)的标签并将其存储在存储单元(内存、寄存器、缓存等)中</li>
+<li>根据指令类型和指令操作数设计相应的传播逻辑传播污点标记</li>
+</ul>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><hr>
+<p><a target="_blank" rel="noopener" href="https://www.k0rz3n.com/2019/03/01/%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF/">https://www.k0rz3n.com/2019/03/01/%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3%E6%B1%A1%E7%82%B9%E5%88%86%E6%9E%90%E6%8A%80%E6%9C%AF/</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/firmianay/CTF-All-In-One/blob/master/doc/5.5_taint_analysis.md">https://github.com/firmianay/CTF-All-In-One/blob/master/doc/5.5_taint_analysis.md</a></p>
 
     </div>
 
@@ -240,16 +257,20 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Learning/" rel="tag"># Learning</a>
+              <a href="/tags/security/" rel="tag"># security</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2021/07/20/interview-preparation/" rel="prev" title="Preparation for the interview in English">
+                  <i class="fa fa-chevron-left"></i> Preparation for the interview in English
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/07/20/interview-preparation/" rel="next" title="Preparation for the interview in English">
-                  Preparation for the interview in English <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
