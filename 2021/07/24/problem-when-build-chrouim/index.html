@@ -139,43 +139,50 @@
 </nav>
 
         <div id="main" >
-            <div class ="post_page_title_img" style="height: 25rem;background-image: url();background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
-                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >Mac环境编译Chromium途中碰到的问题</h2></a>
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://image-1111.oss-cn-beijing.aliyuncs.com/img/0k41mDGgWMM.jpg);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >Mac下编译Chromium碰到的问题</h2></a>
             </div>
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
                 <p>过程参考官方</p>
 <p><a target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/mac_build_instructions.md">https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/mac_build_instructions.md</a></p>
 <p>一定要有一个稳定的梯子和比较快的网络！！！！！！！！</p>
-<h5 id="1-终端连接不上google-source"><a href="#1-终端连接不上google-source" class="headerlink" title="1. 终端连接不上google source"></a>1. 终端连接不上google source</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">________ running &#x27;git -c core.deltaBaseCacheLimit=2g clone --no-checkout --progress https://chromium.googlesource.com/chromium/src.git /Users/heya/seclab/web-cpp/chromium/_gclient_src_sgfunb8r&#x27; in &#x27;/Users/heya/seclab/web-cpp/chromium&#x27;</span><br><span class="line"></span><br><span class="line">Cloning into &#x27;/Users/heya/seclab/web-cpp/chromium/_gclient_src_sgfunb8r&#x27;...</span><br><span class="line"></span><br><span class="line">fatal: unable to access &#x27;https://chromium.googlesource.com/chromium/src.git/&#x27;: Failed to connect to chromium.googlesource.com port 443: Operation timed out</span><br></pre></td></tr></table></figure>
+<h5 id="1-终端连接不上google-source"><a href="#1-终端连接不上google-source" class="headerlink" title="1. 终端连接不上google source"></a>1. 终端连接不上google source</h5><pre><code>________ running &#39;git -c core.deltaBaseCacheLimit=2g clone --no-checkout --progress https://chromium.googlesource.com/chromium/src.git /Users/heya/seclab/web-cpp/chromium/_gclient_src_sgfunb8r&#39; in &#39;/Users/heya/seclab/web-cpp/chromium&#39;
 
+Cloning into &#39;/Users/heya/seclab/web-cpp/chromium/_gclient_src_sgfunb8r&#39;...
+
+fatal: unable to access &#39;https://chromium.googlesource.com/chromium/src.git/&#39;: Failed to connect to chromium.googlesource.com port 443: Operation timed out
+</code></pre>
 <p>原因：终端没有走我的梯子</p>
 <p>解决方案：</p>
 <p>在终端设置代理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891</span><br></pre></td></tr></table></figure>
-
+<pre><code>export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891
+</code></pre>
 <p>设置代理以后我发现还是没有ping通，网上搜了一下，好像是ping使用ICMP协议，不支持代理，可以使用curl website验证。</p>
 <p>注：需要改成自己的梯子的端口</p>
 <h5 id="2-stuck-on-“gclient-sync”"><a href="#2-stuck-on-“gclient-sync”" class="headerlink" title="2. stuck on “gclient sync”"></a>2. stuck on “gclient sync”</h5><p>显示gclint sync，没有别的反应</p>
 <p>我当时以为出错了，但其实是正常的，就是需要的时间确实很久，我是下载了27G的文件，可以通过看看chromium文件大小有没有发生变化，一直在变大的话就没问题，等着就好。</p>
 <p>官网写了“Expect the command to take 30 minutes on even a fast connection, and many hours on slower ones.”，所以最好还是要找一个网好的地方。</p>
-<h5 id="3-未设置-gclient-代理"><a href="#3-未设置-gclient-代理" class="headerlink" title="3. 未设置 gclient 代理"></a>3. 未设置 gclient 代理</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NOTICE: You have PROXY values set in your environment, but gsutilin depot_tools does not (yet) obey them.</span><br><span class="line"></span><br><span class="line">Also, --no_auth prevents the normal BOTO_CONFIG environmentvariable from being used.</span><br><span class="line"></span><br><span class="line">To use a proxy in this situation, please supply those settingsin a .boto file pointed to by the NO_AUTH_BOTO_CONFIG environmentvariable.</span><br></pre></td></tr></table></figure>
+<h5 id="3-未设置-gclient-代理"><a href="#3-未设置-gclient-代理" class="headerlink" title="3. 未设置 gclient 代理"></a>3. 未设置 gclient 代理</h5><pre><code>NOTICE: You have PROXY values set in your environment, but gsutilin depot_tools does not (yet) obey them.
 
+Also, --no_auth prevents the normal BOTO_CONFIG environmentvariable from being used.
+
+To use a proxy in this situation, please supply those settingsin a .boto file pointed to by the NO_AUTH_BOTO_CONFIG environmentvariable.
+</code></pre>
 <p>为了翻墙之前在终端设置了代理，这里depot_tools不遵循了啥啥啥的，根据提示新建一个.boto文件，内容如下，注意port改成自己的</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Boto]</span><br><span class="line">proxy=http://http.proxy.com</span><br><span class="line">proxy_port = 7890</span><br></pre></td></tr></table></figure>
-
+<pre><code>[Boto]
+proxy=http://http.proxy.com
+proxy_port = 7890
+</code></pre>
 <p>然后终端执行以下指令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export NO_AUTH_BOTO_CONFIG=/Users/heya/Desktop/.boto</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h5 id="4-Xcode"><a href="#4-Xcode" class="headerlink" title="4. Xcode"></a>4. Xcode</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select: error: command line tools are already installed, use &quot;Software Update&quot; to install updates</span><br></pre></td></tr></table></figure>
-
+<pre><code>export NO_AUTH_BOTO_CONFIG=/Users/heya/Desktop/.boto
+</code></pre>
+<h5 id="4-Xcode"><a href="#4-Xcode" class="headerlink" title="4. Xcode"></a>4. Xcode</h5><pre><code>xcode-select: error: command line tools are already installed, use &quot;Software Update&quot; to install updates
+</code></pre>
 <p>网上有人说可以删掉重下来解决</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /Library/Developer/CommandLineTools</span><br><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
-
+<pre><code>rm -rf /Library/Developer/CommandLineTools
+xcode-select --install
+</code></pre>
 <p>我试了下不行，后来参考了<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/17980759/xcode-select-active-developer-directory-error/17980786#17980786">https://stackoverflow.com/questions/17980759/xcode-select-active-developer-directory-error/17980786#17980786</a></p>
 <p>步骤如下：</p>
 <ul>
@@ -184,25 +191,25 @@
 <li><p>运行：</p>
 </li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo xcode-select -s /Applications/Xcode.app/Contents/Developer</span><br></pre></td></tr></table></figure>
-
-
-
+<pre><code>sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+</code></pre>
 <h5 id="5-Python版本问题"><a href="#5-Python版本问题" class="headerlink" title="5. Python版本问题"></a>5. Python版本问题</h5><p>在运行autoninja -C out/Default chrome的时候，出现以下报错</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TypeError: a bytes-like object is required, not &#x27;str&#x27;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">../../build/config/mac/plist_util.py:101: DeprecationWarning: The readPlist function is deprecated, use load() instead</span><br><span class="line">  return plistlib.readPlist(f)</span><br><span class="line">../../build/config/mac/plist_util.py:117: DeprecationWarning: The writePlist function is deprecated, use dump() instead</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TypeError: object of type &#x27;map&#x27; has no len()</span><br></pre></td></tr></table></figure>
-
+<pre><code>TypeError: a bytes-like object is required, not &#39;str&#39;
+</code></pre>
+<pre><code>../../build/config/mac/plist_util.py:101: DeprecationWarning: The readPlist function is deprecated, use load() instead
+  return plistlib.readPlist(f)
+../../build/config/mac/plist_util.py:117: DeprecationWarning: The writePlist function is deprecated, use dump() instead
+</code></pre>
+<pre><code>TypeError: object of type &#39;map&#39; has no len()
+</code></pre>
 <p>都是很明显的python2和python3版本不兼容的问题，在stack overflow上也发现有人碰到一样的问题<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/66655333/error-when-trying-to-build-chromium-on-my-own-computer">https://stackoverflow.com/questions/66655333/error-when-trying-to-build-chromium-on-my-own-computer</a></p>
 <p>我修改了/usr/bin/python，让他指向python2.7</p>
 <p>步骤如下：</p>
 <ul>
 <li>运行下面指令，修改/usr/bin/python，指向python2.7</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s -f /usr/bin/python2 /usr/bin/python</span><br></pre></td></tr></table></figure>
-
+<pre><code>ln -s -f /usr/bin/python2 /usr/bin/python
+</code></pre>
 
             </div>
 

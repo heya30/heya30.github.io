@@ -139,7 +139,7 @@
 </nav>
 
         <div id="main" >
-            <div class ="post_page_title_img" style="height: 25rem;background-image: url();background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://image-1111.oss-cn-beijing.aliyuncs.com/img/bJnDFlaU0Hc.jpg);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
                 <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >Preparation for the interview in English</h2></a>
             </div>
             <!-- Post -->
@@ -343,7 +343,9 @@
 <li>Include the item at index ‘i’ if its weight is not more than the capacity. In this case, we include its profit plus whatever profit we get from the remaining capacity and from remaining items =&gt; <code>profit[i] + dp[i-1][c-weight[i]]</code></li>
 </ol>
 <p>Finally, our optimal solution will be maximum of the above two values:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[i][c] = max (dp[i-1][c], profit[i] + dp[i-1][c-weight[i]]) </span><br></pre></td></tr></table></figure></li>
+<pre><code>dp[i][c] = max (dp[i-1][c], profit[i] + dp[i-1][c-weight[i]]) 
+</code></pre>
+</li>
 </ul>
 <p>贪婪算法 Greedy Algorithms</p>
 <p>分治 Divide and Conquer</p>
