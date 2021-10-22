@@ -139,77 +139,27 @@
 </nav>
 
         <div id="main" >
-            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://image-1111.oss-cn-beijing.aliyuncs.com/img/0k41mDGgWMM.jpg);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
-                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >Mac下编译Chromium碰到的问题</h2></a>
+            <div class ="post_page_title_img" style="height: 25rem;background-image: url(https://image-1111.oss-cn-beijing.aliyuncs.com/img/1781503_1331802260kqZ8.jpg);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;" >
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2 >盗梦空间+黑客帝国=克莱因壶</h2></a>
             </div>
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
-                <p>过程参考官方</p>
-<p><a target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/mac_build_instructions.md">https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/mac_build_instructions.md</a></p>
-<p>一定要有一个稳定的梯子和比较快的网络！！！！！！！！</p>
-<h5 id="1-终端连接不上google-source"><a href="#1-终端连接不上google-source" class="headerlink" title="1. 终端连接不上google source"></a>1. 终端连接不上google source</h5><pre><code>________ running &#39;git -c core.deltaBaseCacheLimit=2g clone --no-checkout --progress https://chromium.googlesource.com/chromium/src.git /Users/heya/seclab/web-cpp/chromium/_gclient_src_sgfunb8r&#39; in &#39;/Users/heya/seclab/web-cpp/chromium&#39;
-
-Cloning into &#39;/Users/heya/seclab/web-cpp/chromium/_gclient_src_sgfunb8r&#39;...
-
-fatal: unable to access &#39;https://chromium.googlesource.com/chromium/src.git/&#39;: Failed to connect to chromium.googlesource.com port 443: Operation timed out
-</code></pre>
-<p>原因：终端没有走我的梯子</p>
-<p>解决方案：</p>
-<p>在终端设置代理</p>
-<pre><code>export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891
-</code></pre>
-<p>设置代理以后我发现还是没有ping通，网上搜了一下，好像是ping使用ICMP协议，不支持代理，可以使用curl website验证。</p>
-<p>注：需要改成自己的梯子的端口</p>
-<h5 id="2-stuck-on-“gclient-sync”"><a href="#2-stuck-on-“gclient-sync”" class="headerlink" title="2. stuck on “gclient sync”"></a>2. stuck on “gclient sync”</h5><p>显示gclint sync，没有别的反应</p>
-<p>我当时以为出错了，但其实是正常的，就是需要的时间确实很久，我是下载了27G的文件，可以通过看看chromium文件大小有没有发生变化，一直在变大的话就没问题，等着就好。</p>
-<p>官网写了“Expect the command to take 30 minutes on even a fast connection, and many hours on slower ones.”，所以最好还是要找一个网好的地方。</p>
-<h5 id="3-未设置-gclient-代理"><a href="#3-未设置-gclient-代理" class="headerlink" title="3. 未设置 gclient 代理"></a>3. 未设置 gclient 代理</h5><pre><code>NOTICE: You have PROXY values set in your environment, but gsutilin depot_tools does not (yet) obey them.
-
-Also, --no_auth prevents the normal BOTO_CONFIG environmentvariable from being used.
-
-To use a proxy in this situation, please supply those settingsin a .boto file pointed to by the NO_AUTH_BOTO_CONFIG environmentvariable.
-</code></pre>
-<p>为了翻墙之前在终端设置了代理，这里depot_tools不遵循了啥啥啥的，根据提示新建一个.boto文件，内容如下，注意port改成自己的</p>
-<pre><code>[Boto]
-proxy=http://http.proxy.com
-proxy_port = 7890
-</code></pre>
-<p>然后终端执行以下指令</p>
-<pre><code>export NO_AUTH_BOTO_CONFIG=/Users/heya/Desktop/.boto
-</code></pre>
-<h5 id="4-Xcode"><a href="#4-Xcode" class="headerlink" title="4. Xcode"></a>4. Xcode</h5><pre><code>xcode-select: error: command line tools are already installed, use &quot;Software Update&quot; to install updates
-</code></pre>
-<p>网上有人说可以删掉重下来解决</p>
-<pre><code>rm -rf /Library/Developer/CommandLineTools
-xcode-select --install
-</code></pre>
-<p>我试了下不行，后来参考了<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/17980759/xcode-select-active-developer-directory-error/17980786#17980786">https://stackoverflow.com/questions/17980759/xcode-select-active-developer-directory-error/17980786#17980786</a></p>
-<p>步骤如下：</p>
-<ul>
-<li><p>在APP store安装Xcode</p>
-</li>
-<li><p>运行：</p>
-</li>
-</ul>
-<pre><code>sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-</code></pre>
-<h5 id="5-Python版本问题"><a href="#5-Python版本问题" class="headerlink" title="5. Python版本问题"></a>5. Python版本问题</h5><p>在运行autoninja -C out/Default chrome的时候，出现以下报错</p>
-<pre><code>TypeError: a bytes-like object is required, not &#39;str&#39;
-</code></pre>
-<pre><code>../../build/config/mac/plist_util.py:101: DeprecationWarning: The readPlist function is deprecated, use load() instead
-  return plistlib.readPlist(f)
-../../build/config/mac/plist_util.py:117: DeprecationWarning: The writePlist function is deprecated, use dump() instead
-</code></pre>
-<pre><code>TypeError: object of type &#39;map&#39; has no len()
-</code></pre>
-<p>都是很明显的python2和python3版本不兼容的问题，在stack overflow上也发现有人碰到一样的问题<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/66655333/error-when-trying-to-build-chromium-on-my-own-computer">https://stackoverflow.com/questions/66655333/error-when-trying-to-build-chromium-on-my-own-computer</a></p>
-<p>我修改了/usr/bin/python，让他指向python2.7</p>
-<p>步骤如下：</p>
-<ul>
-<li>运行下面指令，修改/usr/bin/python，指向python2.7</li>
-</ul>
-<pre><code>ln -s -f /usr/bin/python2 /usr/bin/python
-</code></pre>
+                <blockquote>
+<p>”莫比乌斯环没有表里之分，克莱因壶也一样，没有内外之分。假设世上有一个巨大的莫比乌斯环，有人在上面走。那个人总以为自己是在表里走，却不知不觉就走在了里面，因为表里相通嘛。克莱因壶也是内侧和外侧翻转后粘其两端的，所以——“</p>
+<p>“在内壁行走的人，会不知不觉地来到外壁？”</p>
+<p>“就是这么回事！”</p>
+</blockquote>
+<p>近日看了一本1989年的日本小说，《克莱因壶》，超前于《盗梦空间》20年构造出了多重虚拟空间</p>
+<p>其实初看时，觉得设定在今日看并不令人多么惊叹，隐隐都能猜到一些，毕竟已经都看过像盗梦空间这种超级经典的作品。但看到书的后半部分，壶里壶外、虚实交错，作者流畅的叙述、奇妙的巧思，依旧令我啧啧称叹。</p>
+<p>不想太多说剧情，对于看了的人，1000个人可以有1000个理解。对于没看的人，说这种推理科幻类小说的剧情，就跟直接在柯南第一页写谁是凶手一样，在不知情的情况下跟着作者的思路，才能享受其中。</p>
+<p>在看一些科幻作品，包括在看这本的时候，就在想，当虚拟已经无限逼真，甚至虚拟与真实已经让人分不清楚时，那区分虚拟与真实本身还有意义嘛？做一个愚蠢而满足的猪有什么不好呢？</p>
+<p>我想，这本书给了我一个角度去理解，</p>
+<p>虚拟永远建立在现实的基础上，就好像程序生成随机数总需要一个种子</p>
+<p>虚拟用来逼真现实，就可以看作是用一个很大的数字来逼近无穷大</p>
+<p>程序是可以穷尽的可能性，而现实却是自然给予的无穷</p>
+<p>有穷与无穷，这其中的差距或许我们几乎不能感知到，但他们依旧存在着质的区别</p>
+<p>虚幻永远不会是现实</p>
+<p>大概就是对这其中的差别的敬畏，驱使着上衫不惜以死的代价，追求真实</p>
 
             </div>
 
@@ -272,8 +222,8 @@ $('.btn_click_load').click(function() {
 -->
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://example.com/2021/07/24/problem-when-build-chrouim/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://example.com/2021/07/24/problem-when-build-chrouim/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://example.com/2021/10/22/klein/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://example.com/2021/10/22/klein/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
